@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Book List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Poppins', sans-serif;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        .table {
+            background: #ffffff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .table th {
+            background: #007bff;
+            color: white;
+            text-align: center;
+        }
+        .table tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+        .btn-primary {
+            background: linear-gradient(90deg, #007bff, #0056b3);
+            border: none;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 10px 15px;
+            border-radius: 6px;
+            transition: all 0.3s ease-in-out;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(90deg, #0056b3, #004093);
+            transform: scale(1.05);
+        }
+        .action-btn {
+            padding: 6px 12px;
+            font-size: 14px;
+            border-radius: 5px;
+        }
+        .btn-danger {
+            background: #dc3545;
+            border: none;
+            transition: all 0.3s;
+        }
+        .btn-danger:hover {
+            background: #b02a37;
+            transform: scale(1.05);
+        }
+        .btn-warning {
+            background: #ffc107;
+            border: none;
+            color: #212529;
+            transition: all 0.3s;
+        }
+        .btn-warning:hover {
+            background: #e0a800;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2 class="text-center mb-4">📚 Book List</h2>
+
+        <div class="d-flex justify-content-between mb-3">
+            <h5>Manage your books</h5>
+            <a href="{% url 'add_book' %}" class="btn btn-primary">➕ Add New Book</a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped text-center">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Genre</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for book in books %}
+                    <tr>
+                        <td>{{ book.title }}</td>
+                        <td>{{ book.author }}</td>
+                        <td>${{ book.price }}</td>
+                        <td>{{ book.stock }}</td>
+                        <td>{{ book.genre }}</td>
+                        <td>
+                            <a href="{% url 'edit_book' book.id %}" class="btn btn-warning action-btn">✏ Edit</a>
+                            <a href="{% url 'delete_book' book.id %}" class="btn btn-danger action-btn">🗑 Delete</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-muted">No books available</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
